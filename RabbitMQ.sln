@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Producer.UI", "Producer.UI\Producer.UI.csproj", "{2DD46BDA-A66F-4040-855E-FFDCF9F67184}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DD46BDA-A66F-4040-855E-FFDCF9F67184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DD46BDA-A66F-4040-855E-FFDCF9F67184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DD46BDA-A66F-4040-855E-FFDCF9F67184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DD46BDA-A66F-4040-855E-FFDCF9F67184}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

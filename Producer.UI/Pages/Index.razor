@@ -1,0 +1,136 @@
+﻿@page "/"
+@inherits IndexBase
+<PageTitle>RabbitMQ</PageTitle>
+<MudGrid>
+    <MudItem xs="12" md="8">
+        <Card Title="ConnectionString">
+            <ChildContent>
+                <MudGrid>
+                    <MudItem xs="12" md="10">
+                        <MudTextField Margin="Margin.Dense" @bind-Value="ConnectionString" Label="ConnectionString" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="12" md="2" Class="justify-center  align-self-center">
+                        <MudButton Variant="Variant.Filled" OnClick="Connect" Color="Color.Primary" Size="Size.Medium">@ConnectName</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </ChildContent>
+            <ChildAction>
+            </ChildAction>
+        </Card>
+
+        <Card Title="Queue/Exchange Declare">
+            <ChildContent>
+                <MudGrid Justify="Justify.Center">
+                    <MudItem xs="6">
+                        <MudText Typo="Typo.h6">Declare Queue</MudText>
+                        <br/>
+                        <MudTextField Margin="Margin.Dense" Disabled="@(!isConnectionOpen)" @bind-Value="QueueName" Label="QueueName" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudText Typo="Typo.h6">Declare Exchange</MudText>
+                        <br/>
+                        <MudTextField Margin="Margin.Dense" Disabled="@(!isConnectionOpen)" @bind-Value="Name" Label="Name" Variant="Variant.Outlined"></MudTextField>
+                        <br/>
+                        <MudSelect T="string" Label="Type" Disabled="@(!isConnectionOpen)" MultiSelection="false" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="Type">
+                            @foreach (var type in Types)
+                            {
+                                <MudSelectItem T="string" Value="@type">@type</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                </MudGrid>
+            </ChildContent>
+            <ChildAction>
+                <MudGrid Justify="Justify.Center">
+                    <MudItem>
+                        <MudButton Variant="Variant.Filled" Disabled="@(!isConnectionOpen)" OnClick="DeclareQueue" Color="Color.Primary" Size="Size.Medium">Declare</MudButton>
+                    </MudItem>
+                    <MudItem>
+                        <MudButton Variant="Variant.Filled" Disabled="@(!isConnectionOpen)" OnClick="DeclareExchange" Color="Color.Primary" Size="Size.Medium">Declare</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </ChildAction>
+        </Card>
+
+        <Card Title="Bind Queue & Exchange">
+            <ChildContent>
+                <MudGrid>
+                    <MudItem xs="12" md="10">
+                        <MudTextField Margin="Margin.Dense" Disabled="@(!isConnectionOpen)" @bind-Value="RoutingKey" Label="RoutingKey" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="12" md="2" Class="justify-center  align-self-center">
+                        <MudButton Variant="Variant.Filled" Disabled="@(!isConnectionOpen)" OnClick="Connect" Color="Color.Primary" Size="Size.Medium">Bind Queue</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </ChildContent>
+            <ChildAction>
+            </ChildAction>
+        </Card>
+
+        <Card Title="Bind Queue & Exchange">
+            <ChildContent>
+                <MudGrid>
+                    <MudItem xs="6">
+                        <MudTextField Margin="Margin.Dense" Disabled="@(!isConnectionOpen)" @bind-Value="ExchangeName" Label="ExchangeName" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudSelect T="string" Label="Exchange Type" Disabled="@(!isConnectionOpen)" MultiSelection="false" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="ExchangeType">
+                            @foreach (var type in Types)
+                            {
+                                <MudSelectItem T="string" Value="@type">@type</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField Margin="Margin.Dense" Disabled="@(!isConnectionOpen)" @bind-Value="RoutingKey" Label="RoutingKey" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField T="string" Label="Messages" Disabled="@(!isConnectionOpen)" Variant="Variant.Outlined" Text="@Messages" Lines="5"/>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudTextField Margin="Margin.Dense" @bind-Value="Repeat" Disabled="@(!isConnectionOpen)" Label="Repeat" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudCheckBox @bind-Checked="@UseCounter" Disabled="@(!isConnectionOpen)" Label="Use Counter" Color="Color.Primary"></MudCheckBox>
+                    </MudItem>
+
+                </MudGrid>
+            </ChildContent>
+            <ChildAction>
+                <MudGrid Justify="Justify.Center">
+                    <MudItem>
+                        <MudButton Variant="Variant.Filled" Disabled="@(!isConnectionOpen)" OnClick="Publish" Color="Color.Primary" Size="Size.Medium">Publish</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </ChildAction>
+        </Card>
+    </MudItem>
+    <MudItem xs="12" md="4">
+        <Card Title="Connection State">
+            <ChildContent>
+                <MudGrid Style="height: 69px">
+                    <MudItem xs="12">
+                        <MudSwitch @bind-Checked="@isConnectionOpen" ReadOnly="true" Label="@(isConnectionOpen ? "Connection : Open" : "Connection : Close")" Color="Color.Success"/>
+                    </MudItem>
+                </MudGrid>
+            </ChildContent>
+            <ChildAction>
+            </ChildAction>
+        </Card>
+        <Card Title="Log">
+            <ChildContent>
+                <MudGrid >
+                    <MudItem xs="12">
+                        @foreach (var log in Log)
+                        {
+                            <MudAlert Dense="true" Style="margin-top: 3px" Severity="@log.Severity">@log.Message</MudAlert>
+                        }
+                    </MudItem >
+                </MudGrid>
+            </ChildContent>
+            <ChildAction>
+            </ChildAction>
+        </Card>
+    </MudItem>
+</MudGrid>
+
