@@ -1,14 +1,22 @@
 
+using MudBlazor;
 using MudBlazor.Services;
-using Producer.UI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMudServices();
+builder.Services.AddMudServices(configuration =>
+{
+    configuration.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
+    configuration.SnackbarConfiguration.PreventDuplicates = false;
+    configuration.SnackbarConfiguration.NewestOnTop = false;
+    configuration.SnackbarConfiguration.VisibleStateDuration =1000;
+    configuration.SnackbarConfiguration.HideTransitionDuration = 500;
+    configuration.SnackbarConfiguration.ShowTransitionDuration = 50;
+    configuration.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+});
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 
 var app = builder.Build();
 

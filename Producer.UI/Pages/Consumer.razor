@@ -1,0 +1,41 @@
+﻿@page "/consumer"
+@inherits ConsumerBase
+<PageTitle>RabbitMQ</PageTitle>
+<MudGrid>
+        <MudItem xs="12">
+        <Card Title="ConnectionString">
+            <ChildContent>
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Margin="Margin.Dense" @bind-Value="ConnectionString" Label="ConnectionString" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Margin="Margin.Dense" @bind-Value="QueueName" Label="Queue Name" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                </MudGrid>
+            </ChildContent>
+            <ChildAction>
+                <MudGrid Justify="Justify.Center">
+                    <MudItem>
+                        <MudButton Variant="Variant.Filled" OnClick="@(ReadQueue)" Color="Color.Primary" Size="Size.Medium">Declare</MudButton>
+                        <MudButton Variant="Variant.Filled" OnClick="@(StateHasChanged )" Color="Color.Primary" Size="Size.Medium">Log Show</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </ChildAction>
+        </Card>
+       <Card Title="Log">
+                   <ChildContent>
+                       <MudGrid >
+                           <MudItem xs="12">
+                               @foreach (var message in Messages)
+                               {
+                                   <MudAlert Dense="true" Style="margin-top: 3px" Severity="Severity.Info">@message</MudAlert>
+                               }
+                           </MudItem >
+                       </MudGrid>
+                   </ChildContent>
+                   <ChildAction>
+                   </ChildAction>
+               </Card>
+    </MudItem>
+</MudGrid>
